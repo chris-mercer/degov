@@ -1,8 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 import { isAddress, type Address } from "viem";
-import { usePublicClient } from "wagmi";
-import { mainnet } from "wagmi/chains";
 
 import { DEFAULT_PAGE_SIZE } from "@/config/base";
 import { useAiBotAddress } from "@/hooks/useAiBotAddress";
@@ -29,7 +27,6 @@ export function useMembersData(
   const { botAddress } = useAiBotAddress();
   const isSearching = searchTerm.trim().length > 0;
   const normalizedInitialPageSize = Math.max(pageSize, initialPageSize);
-  const publicClient = usePublicClient({ chainId: mainnet.id });
 
   const resolveSearchAddress = useCallback(
     async (rawTerm: string): Promise<Address | undefined> => {
@@ -41,19 +38,9 @@ export function useMembersData(
         return normalizedTerm as Address;
       }
 
-      if (!publicClient || !trimmedTerm.includes(".")) return undefined;
-
-      try {
-        const ensAddress = await publicClient.getEnsAddress({
-          name: trimmedTerm,
-        });
-
-        return ensAddress ? (ensAddress.toLowerCase() as Address) : undefined;
-      } catch {
-        return undefined;
-      }
+      return undefined;
     },
-    [publicClient]
+    []
   );
 
   const membersQuery = useInfiniteQuery({

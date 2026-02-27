@@ -1,5 +1,3 @@
-import { useEnsName } from "wagmi";
-
 import { useProfileQuery } from "@/hooks/useProfileQuery";
 import { formatShortAddress } from "@/utils/address";
 
@@ -22,20 +20,8 @@ export function AddressResolver({
 
   const profileName = profileData?.data?.name;
 
-  const { data: ensName } = useEnsName({
-    address,
-    chainId: 1,
-    query: {
-      staleTime: 1000 * 60 * 60,
-      gcTime: 1000 * 60 * 60 * 24,
-      // Even when profile fetching is skipped, still try ENS as a lightweight fallback
-      enabled: !profileName,
-    },
-  });
-
   const displayValue =
     profileName ||
-    ensName ||
     (showShortAddress ? formatShortAddress(address) : address);
 
   return <>{children(displayValue)}</>;

@@ -9,7 +9,6 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 import { QueryClient } from "@tanstack/react-query";
 import { cookieStorage, createStorage, type Storage } from "wagmi";
-import { mainnet } from "wagmi/chains";
 
 import { createWagmiQueryConfig } from "@/utils/query-config";
 
@@ -53,7 +52,7 @@ export function createConfig({
     return cachedConfig;
   }
 
-  const chains = [mainnet as Chain, chain];
+  const chains = [chain];
   const storage: Storage = createStorage({
     storage: cookieStorage,
   });

@@ -118,6 +118,8 @@ export class ChainTool {
       ],
     ],
     [46, ["https://rpc.darwinia.network"]],
+    [61, ["https://etc.rivet.link"]],
+    [63, ["http://localhost:8545", "https://rpc.mordor.etccooperative.org"]],
     [
       56,
       [
